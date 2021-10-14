@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Lambda_Expression.VariablesScopeWithLambdas;
 
 namespace Lambda_Expression
 {
@@ -16,6 +17,7 @@ namespace Lambda_Expression
             var squaredNumbers = number.Select(x => x * x);
                         
             greet("Tondy");
+            Console.WriteLine();
 
             var numbers = (2, 3, 4);
             var doubleNumbers = doubleThem(numbers);
@@ -40,6 +42,21 @@ namespace Lambda_Expression
             {
                 Console.WriteLine(string.Join(" ", numberSet));
             }
+
+            var game = new VariableCaptureGame();
+            int gameInput = 5;
+            game.Run(gameInput);
+
+            int jTry = 10;
+            bool result = game.isEqualToCapturedLocalVariable(jTry);
+            Console.WriteLine($"Captured local variable is equal to {jTry}: {result}");
+
+            int anotherJ = 3;
+            game.updateCapturedLocalVariable(anotherJ);
+
+            bool equalToAnother = game.isEqualToCapturedLocalVariable(anotherJ);
+            Console.WriteLine($"Another lambda observes a new value of captured variable: {equalToAnother}");
+            //Output
         }
 
         static Func<int, int> square = x => x * x;
@@ -53,8 +70,7 @@ namespace Lambda_Expression
             Console.WriteLine(greeting);
         };
 
-        static Func<(int, int, int), (int, int, int)> doubleThem = ns => (2 * ns.Item1, 2 * ns.Item2, 2 * ns.Item3);
-        
+        static Func<(int, int, int), (int, int, int)> doubleThem = ns => (2 * ns.Item1, 2 * ns.Item2, 2 * ns.Item3);    
     }
     public static class VariablesScopeWithLambdas
     {
